@@ -9,6 +9,9 @@ import nedioit.dione.ms_achat.repository.AchatRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.Currency;
+import java.util.List;
+
 @Service
 public class AchatServiceImpl implements AchatService{
 
@@ -23,25 +26,35 @@ public class AchatServiceImpl implements AchatService{
     }
 
     @Override
-    public AchatResponse addAchat(AchatRequest achatRequest) {
-        try {
-            Achat achat = achatMapper.fromAchatRequest(achatRequest);
-            double tot = 0;
-            for (Long p : achat.getProducts()){
-                ProductResponse productResponse = webClient.get()
-                        .uri("localhost:8085/api/product/"+p)
-                        .retrieve()
-                        .bodyToMono(ProductResponse.class)
-                        .block();
-                tot+= productResponse.getPrice();
-            }
-            achat.setTotal(tot);
-            achatRepository.save(achat);
-            return achatMapper.fromAchat(achat);
+    public AchatResponse addAchat(AchatRequest achatReq) {
+        Achat achat = achatMapper.fromAchatRequest(achatReq);
+        //--------------------taux de change---------------
+        nedioit.dione.ms_achat.dto.Currency currency = webClient.get()
+                .uri("https://v6.exchangerate-api.com/v6/f8dcc0741adee2f1e11bcbdb/latest/"+achat.getCurrency())
+                .retrieve()
+                .bodyToMono(nedioit.dione.ms_achat.dto.Currency.class)
+                .block();
 
-        }catch (Exception ex){
-            ex.printStackTrace();
+
+        //-------------------------------------------------
+        double tot = 0;
+        for(Long p:achat.getProducts()){
+            ProductResponse productResponse = webClient.get()
+                    .uri("http://localhost:8085/api/product/"+p)
+                    .retrieve()
+                    .bodyToMono(ProductResponse.class)
+                    .block();
+            tot += productResponse.getPrice();
         }
-        return null;
+        achat.setTotal(tot*currency.getConversion_rate());
+        achat.setTotal(tot);
+        achatRepository.save(achat);
+        return achatMapper.fromAchat(achat);
+    }
+
+    @Override
+    public List<Achat> getAllAchat() {
+        List<Achat> achatList = achatRepository.findAll();
+        return achatList;
     }
 }

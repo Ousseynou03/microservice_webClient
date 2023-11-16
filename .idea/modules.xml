@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/TP_Microservice_WebClient.iml" filepath="$PROJECT_DIR$/.idea/TP_Microservice_WebClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/angularMicroService.iml" filepath="$PROJECT_DIR$/angularMicroService.iml" />
       <module fileurl="file://$PROJECT_DIR$/author/author.iml" filepath="$PROJECT_DIR$/author/author.iml" />
       <module fileurl="file://$PROJECT_DIR$/mybook2/mybook.iml" filepath="$PROJECT_DIR$/mybook2/mybook.iml" />
     </modules>
