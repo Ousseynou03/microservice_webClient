@@ -1,0 +1,73 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-custom-purple" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-top: 30px; margin-left: 30px">
+  Ajouter un produit
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nouveau Produit</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="cards">
+          <div class="card-bodi">
+            <div class="card-header">
+              <span>Enregistrement d'un Produit</span>
+            </div>
+            <form (ngSubmit)="addProduct()">
+              <div>
+                <label></label>
+                <input placeholder="Nom" type="text" [(ngModel)]="product.productName"  name="nom" required >
+              </div>
+              <div>
+                <label></label>
+                <input placeholder="Category" type="text" [(ngModel)]="product.category" name="category" required>
+              </div>
+              <div>
+                <label></label>
+                <input placeholder="Price" type="text" [(ngModel)]="product.price" name="rice" required>
+              </div>
+              <button type="submit">Enregistrer</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Liste des products -->
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">N°</th>
+    <th scope="col">Nom</th>
+    <th scope="col">Categorie</th>
+    <th scope="col">Prix</th>
+    <th scope="col">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let product of products; let i = index">
+    <td>{{ i + 1 }}</td>
+    <td>{{ product.productName }}</td>
+    <td>{{ product.category }}</td>
+    <td>{{ product.price }}</td>
+    <td>
+      <button class="btn btn-link text-primary" data-bs-toggle="modal" data-bs-target="#exampleModalEdit">
+        <i class="fas fa-edit"></i>
+      </button>
+      <button class="btn btn-link text-danger">
+        <i class="fas fa-trash-alt"></i>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
