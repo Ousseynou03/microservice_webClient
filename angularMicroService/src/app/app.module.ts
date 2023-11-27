@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { ProductComponent } from './product/product.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AchatComponent } from './achat/achat.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductComponent,
-    NavBarComponent
+    NavBarComponent,
+    AchatComponent
   ],
   imports: [
     BrowserModule,
