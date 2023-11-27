@@ -24,4 +24,10 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.baseUrl}/api/product/`);
   }
 
+  // Suppression
+  deleteProduct(id: number): Observable<any> {
+    const url = `${this.baseUrl}/api/product/${id}`;
+    return this.http.delete(url);
+  }
+
 }

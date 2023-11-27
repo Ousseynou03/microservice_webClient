@@ -67,6 +67,42 @@ export class ProductComponent implements OnInit{
     );
   }
 
+  // Suppression
+  deleteProduct(id: number) {
+    Swal.fire({
+      title: 'Voulez-vous vraiment supprimer ce product ?',
+      text: 'Le Produit sera définitivement supprimé!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, supprimer!'
+    }).then((result) => {
+      if (result.value) {
+
+        this.productService.deleteProduct(id).subscribe(
+          () => {
+            Swal.fire({
+              title: 'Supprimé!',
+              text: 'Le produit a été supprimé avec succès.',
+              icon: 'success'
+            });
+            this.productService.getAllProducts().subscribe(updatedProducts => {
+              this.products = updatedProducts;
+            });
+          },
+          (error) => {
+            Swal.fire({
+              title: 'Oups!',
+              text: 'Impossible de supprimer ce product.',
+              icon: 'error'
+            });
+          }
+        );
+      }
+    });
+  }
+
 
 
 
